@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form id="formProducto" th:object="${unCliente}" th:action="@{/cliente/guardar}" method="post">
+
+			<label for="nomape">Nombre y apellido</label> 
+			<input type="text"	id="nomape" th:field="*{nombreApellido}">
+		<br>
+			<label for="fechanac">Nacimiento</label>			
+			<input type="date"	id="fechanac" th:field="*{fechaNacimiento}">
+		<br>
+		
+		<label for="numdoc">Documento</label> 
+			<input type="number"	id="numdoc" th:field="*{nroDocumento}">
+		<br>
+
+			<label for="tipo">Tipo</label> 
+			<select id="tipo" th:field="*{tipoDocumento}">
+				<option value="DNI">DNI</option>
+				<option value="Pasaporte">Pasaporte</option>
+			</select>
+		<br>
+
+			<label for="codigo">Cod Area</label> 
+			<input type="number" id="codigo" th:field="*{codigoAreaTelefono}">		
+		<br>
+
+			<label for="numtel">Telefono</label> 
+			<input type="number" id="numtel" th:field="*{numTelefono}">		
+		<br>
+
+			<label for="email">Email</label> 
+			<input type="email" id="email" th:field="*{email}">
+		<br>
+			<label for="com">Fecha de ultima compra</label> 
+			<input type="date"	id="com" th:field="*{fechaUltimaCompra}">
+		<br>
+		<div>
+			<button type="submit" value="Agregar">Agregar</button>
+		</div>
+
+	</form>
+
+<!-- ---------------------------------------------------------------- -->
+
+<h3>Lista de Clientes</h3><br>
+			<div>
+				<table border="1">
+				    <tr>
+				      <th style=background:red>Tipo Doc</th>
+				      <th style=background:red>Nro de documento</th>
+				      <th style=background:red>Apellido y nombre</th>
+				      <th style=background:red>Email</th>
+				      <th style=background:red>Fecha de nacimiento</th>    
+				      <th style=background:red>Fecha de ultima compra</th>
+				      <th style=background:red>Edad</th>
+				      <th style=background:red>Telefono</th>
+				      <th style=background:red>Datos Adicionales</th>	
+				      <th style=background:red>Datos adicionales</th>			      
+				    </tr>
+					<tr th:each="cli : ${clientes}">
+						<td th:text="${cli.tipoDocumento}"></td>
+						<td th:text="${cli.nroDocumento}"></td>
+						<td th:text="${cli.nombreApellido.toUpperCase()}"></td>
+						<td th:text="${cli.email}"></td>
+						<td th:text="${#temporals.format(cli.fechaNacimiento,'dd/MM/yyyy')}"></td>
+						<td th:text="${#temporals.format(cli.fechaUltimaCompra,'dd/MM/yyyy')}"></td>
+						<td th:text="${cli.getEdad()}" ></td>
+						<td th:text="${cli.codigoAreaTelefono+'-'+cli.numTelefono}"></td>
+						<td th:text="${cli.getTiempoDesdeUltimaCompra()}"></td>
+						<td th:text="${cli.getTiempoDesdeCumple()}"></td>						
+					</tr>
+				</table>
+			</div>	
+</body>
+</html>
